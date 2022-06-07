@@ -17,15 +17,15 @@ function plotting_testcase1()
 
 end
 plotting_testcase1()
-savefig("./fig/task_overhead_testcase1.png")
+savefig("./fig/overhead/testcase1.png")
+
 
 function plotting_testcase2()
-
-    x1 = ["DataFlowTasks"] ; x2 = ["Dagger"] 
-    y1 = [7.08] ; y2 = [154]
+    x1 = ["DataFlowTasks"] ; x2 = ["Dagger"] ; x3 = ["Base"]
+    y1 = [6.232] ; y2 = [192] ; y3 = [0.003]
     bar(
         x1, y1,
-        title = "Overhead for creating 400 tasks (with dependance)",
+        title = "Overhead for creating 400 tasks (with dependancies)",
         ylabel = "Overhead (ms)",
         legend=:none,
         color=:purple
@@ -33,6 +33,9 @@ function plotting_testcase2()
     bar!(
         x2, y2
     )
+    bar!(
+        x3, y3
+    )
 end
 plotting_testcase2()
-savefig("./fig/task_overhead_testcase2.png")
+savefig("./fig/overhead/testcase2.png")
