@@ -13,7 +13,7 @@ function _cholesky_dft!(A::PseudoTiledMatrix)
     for i in 1:m
         Aii = A[i,i]
         # _chol!(Aii)
-        @dspawn _chol!(Aii) (Aii,) (RW,)
+        @dspawn LinearAlgebra.cholesky!(Aii) (Aii,) (RW,)
         U = UpperTriangular(Aii)
         L = adjoint(U)
         for j in i+1:n

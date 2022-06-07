@@ -38,9 +38,6 @@ nb_elts = Int(1 + (max_size - min_size)/step)
 function benchmarking(func, name)
     # Data vector allocations
     t   = Vector{Float64}(undef, nb_elts)
-    std = Vector{Float64}(undef, nb_elts)
-    t_max = Vector{Float64}(undef, nb_elts)
-    t_min = Vector{Float64}(undef, nb_elts)
 
     # Display
     println("="^30, " ", name, " ", "="^30)
@@ -85,7 +82,7 @@ function benchmarking(func, name)
     # Write times in file
     filename = joinpath("$ROOT_DIR/data/$name/", "nc_$nt.dat")
     open(filename, "w") do io
-        writedlm(io, [nn t t_min t_max], "\t")
+        writedlm(io, [nn t], "\t")
     end
 
     nothing

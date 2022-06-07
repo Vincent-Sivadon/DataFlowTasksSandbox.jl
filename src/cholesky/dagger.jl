@@ -46,6 +46,6 @@ end
 
 # Utility spawn thunk
 function chol_task(Aii)
-    _chol!(Aii)
+    LinearAlgebra.cholesky!(Aii)
     Aii
 end

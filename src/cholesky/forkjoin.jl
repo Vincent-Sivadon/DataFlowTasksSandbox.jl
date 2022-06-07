@@ -11,7 +11,7 @@ function _cholesky_forkjoin!(A::PseudoTiledMatrix)
     m,n = size(A)
     
     for i in 1:m
-        _chol!(A[i,i],UpperTriangular,tturbo)
+        LinearAlgebra.cholesky!(A[i,i])
         Aii = A[i,i]
         U = UpperTriangular(Aii)
         L = adjoint(U)
