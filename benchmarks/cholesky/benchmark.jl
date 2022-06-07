@@ -80,7 +80,7 @@ function benchmarking(func, name)
     end
 
     # Write times in file
-    filename = joinpath("$ROOT_DIR/data/$name/", "nc_$nt.dat")
+    filename = joinpath("$ROOT_DIR/data/cholesky/$name/", "nc_$nt.dat")
     open(filename, "w") do io
         writedlm(io, [nn t], "\t")
     end

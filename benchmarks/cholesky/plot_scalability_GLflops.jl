@@ -8,12 +8,12 @@ using Match
 
 function plotting_scalability_rel(name, color)
     
-    file_1  = joinpath("$ROOT_DIR/data/$name/", "nc_1.dat" )
-    file_2  = joinpath("$ROOT_DIR/data/$name/", "nc_2.dat" )
-    file_4  = joinpath("$ROOT_DIR/data/$name/", "nc_4.dat" )
-    file_8  = joinpath("$ROOT_DIR/data/$name/", "nc_8.dat" )
-    file_12 = joinpath("$ROOT_DIR/data/$name/", "nc_12.dat")
-    file_16 = joinpath("$ROOT_DIR/data/$name/", "nc_16.dat")
+    file_1  = joinpath("$ROOT_DIR/data/cholesky/$name/", "nc_1.dat" )
+    file_2  = joinpath("$ROOT_DIR/data/cholesky/$name/", "nc_2.dat" )
+    file_4  = joinpath("$ROOT_DIR/data/cholesky/$name/", "nc_4.dat" )
+    file_8  = joinpath("$ROOT_DIR/data/cholesky/$name/", "nc_8.dat" )
+    file_12 = joinpath("$ROOT_DIR/data/cholesky/$name/", "nc_12.dat")
+    file_16 = joinpath("$ROOT_DIR/data/cholesky/$name/", "nc_16.dat")
 
     t_1  = readdlm(file_1,  '\t', Float64, '\n')[end, 2]
     t_2  = readdlm(file_2,  '\t', Float64, '\n')[end, 2]

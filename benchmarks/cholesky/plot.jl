@@ -10,7 +10,7 @@ const ROOT_DIR = pkgdir(DataFlowTasksSandbox)
 
 function plotting(name, color, nthreads)
     
-    file = joinpath("$ROOT_DIR/data/$name/", "nc_$nthreads.dat")
+    file = joinpath("$ROOT_DIR/data/cholesky/$name/", "nc_$nthreads.dat")
     data = readdlm(file, '\t', Float64, '\n')
     
     n   = data[:, 1]
