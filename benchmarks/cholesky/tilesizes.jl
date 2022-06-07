@@ -31,9 +31,9 @@ function benchmarking()
     # Benchmark
     for i ∈ 1:length(tilesizes)
         DataFlowTasksSandbox.TILESIZE[] = tilesizes[i]
-        b_seq    = @benchmark _chol!(B)           setup=(B = copy($A)) evals=1
-        b_dft    = @benchmark cholesky_dft!(B)    setup=(B = copy($A)) evals=1
-        b_dagger = @benchmark cholesky_dagger!(B) setup=(B = copy($A)) evals=1
+        b_seq    = @benchmark cholesky_tiled_seq!(B) setup=(B = copy($A)) evals=1
+        b_dft    = @benchmark cholesky_dft!(B)       setup=(B = copy($A)) evals=1
+        b_dagger = @benchmark cholesky_dagger!(B)    setup=(B = copy($A)) evals=1
 
         t_seq[i]    = median(b_seq   ).time
         t_dft[i]    = median(b_dft   ).time

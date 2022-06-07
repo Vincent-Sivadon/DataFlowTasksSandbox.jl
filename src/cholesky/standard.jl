@@ -2,6 +2,38 @@
 # Implementation of a modified version of the cholesky factorization from LinearAlgebra (MIT license)
 #
 
+cholesky_tiled_seq!(A::Matrix,s=TILESIZE[]) = _cholesky_tiled_seq!(PseudoTiledMatrix(A,s))
+function _cholesky_tiled_seq!(A::PseudoTiledMatrix)
+    # Number of blocks
+    m,n = size(A)
+
+    for i in 1:m
+        Aii = A[i,i]
+        # _chol!(Aii)
+        _chol!(Aii)
+        U = UpperTriangular(Aii)
+        L = adjoint(U)
+        for j in i+1:n
+            Aij = A[i,j]
+            # TriangularSolve.ldiv!(L,Aij)
+            TriangularSolve.ldiv!(L,Aij)
+        end
+        for j in i+1:m
+            Aij = A[i,j]
+            for k in j:n
+                # TODO: for k = j, only the upper part needs to be updated,
+                # dividing the cost of that operation by two
+                Ajk = A[j,k]
+                Aji = adjoint(Aij)
+                Aik = A[i,k]
+                # schur_complement!(Ajk,Aji,Aik)
+                Octavian.matmul_serial!(Ajk,Aji,Aik,-1,1)
+            end
+        end
+    end
+    return Cholesky(A.data,'U',zero(BlasInt))
+end
+
 # Computes the Cholesky factorization of A inplace
 # A must be SPD for Cholesky, so we only care for the
 # upper triangular part of A 

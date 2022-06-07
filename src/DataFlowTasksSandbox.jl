@@ -30,8 +30,8 @@ include("lu/forkjoin.jl")
 
 export
     PseudoTiledMatrix,
-    _chol!,
+    _chol!, cholesky_tiled_seq!,
     cholesky_dft!, cholesky_dagger!, cholesky_forkjoin!,
     ROOT_DIR
-    
+
 end # module
