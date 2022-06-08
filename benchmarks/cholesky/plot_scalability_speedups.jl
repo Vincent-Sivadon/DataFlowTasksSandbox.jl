@@ -53,4 +53,4 @@ plotting_scalability("dft", :purple)
 plotting_scalability("dagger", :orange)
 plotting_scalability("forkjoin", :blue)
 
-savefig("./fig/cholesky/scalability_speedups.png")
+savefig("./fig/cholesky/scalability_speedups_maury.png")

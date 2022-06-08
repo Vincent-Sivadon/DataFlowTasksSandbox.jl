@@ -22,7 +22,7 @@ capacity = 50
 sch = DataFlowTasks.JuliaScheduler(capacity)
 DataFlowTasks.setscheduler!(sch)
 
-tilesize = 256
+tilesize = 128
 DataFlowTasksSandbox.TILESIZE[] = tilesize
 
 # Matrix sizes
