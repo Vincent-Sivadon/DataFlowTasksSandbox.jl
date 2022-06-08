@@ -11,13 +11,13 @@ function _cholesky_forkjoin!(A::PseudoTiledMatrix)
     m,n = size(A)
     
     for i in 1:m
-        _chol!(A[i,i],UpperTriangular,tturbo)
+        _chol!(A[i,i])
         Aii = A[i,i]
         U = UpperTriangular(Aii)
         L = adjoint(U)
         Threads.@threads for j in i+1:n
             Aij = A[i,j]
-            TriangularSolve.ldiv!(L,Aij,tturbo)
+            TriangularSolve.ldiv!(L,Aij)
         end
         # spawn m*(m+1)/2 tasks and sync them at the end
         @sync for j in i+1:m
@@ -26,7 +26,7 @@ function _cholesky_forkjoin!(A::PseudoTiledMatrix)
                 Ajk = A[j,k]
                 Aji = adjoint(Aij)
                 Aik = A[i,k]
-                Threads.@spawn schur_complement!(Ajk,Aji,Aik,tturbo)
+                Octavian.matmul_serial!(Ajk,Aji,Aik,-1,1)
             end
         end
     end
