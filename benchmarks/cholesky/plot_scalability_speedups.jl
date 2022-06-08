@@ -5,34 +5,37 @@ using Match
 const ROOT_DIR = pkgdir(DataFlowTasksSandbox)
 
 function plotting_scalability(name, color)
+    n = [2^i for i ∈ 0:4]
+
+    # Get reference data (tiled seq)
+    # -----------------------------
+    files_ref = [joinpath("$ROOT_DIR/data/cholesky/tiled_seq/", "nc_$i.dat")
+                    for i ∈ n ]
+    t_ref = [ readdlm(files_ref[i],  '\t', Float64, '\n')[end, 2]
+                for i ∈ 1:5 ]
+
+    # Get current version of interest's data
+    # --------------------------------------
+    files = [ joinpath("$ROOT_DIR/data/cholesky/$name/", "nc_$i.dat")
+                for i ∈ n ]
+    t = [ readdlm(files[i],  '\t', Float64, '\n')[end, 2]
+            for i ∈ 1:5 ]
     
-    file_1  = joinpath("$ROOT_DIR/data/cholesky/$name/", "nc_1.dat" )
-    file_2  = joinpath("$ROOT_DIR/data/cholesky/$name/", "nc_2.dat" )
-    file_4  = joinpath("$ROOT_DIR/data/cholesky/$name/", "nc_4.dat" )
-    file_8  = joinpath("$ROOT_DIR/data/cholesky/$name/", "nc_8.dat" )
-    file_12 = joinpath("$ROOT_DIR/data/cholesky/$name/", "nc_12.dat")
-    file_16 = joinpath("$ROOT_DIR/data/cholesky/$name/", "nc_16.dat")
-    
-    t_1  = readdlm(file_1,  '\t', Float64, '\n')[end, 2]
-    t_2  = readdlm(file_2,  '\t', Float64, '\n')[end, 2]
-    t_4  = readdlm(file_4,  '\t', Float64, '\n')[end, 2]
-    t_8  = readdlm(file_8,  '\t', Float64, '\n')[end, 2]
-    t_12 = readdlm(file_12, '\t', Float64, '\n')[end, 2]
-    t_16 = readdlm(file_16, '\t', Float64, '\n')[end, 2]
-    
-    n_cores   = [1, 2, 4, 8, 12, 16]
-    speedups  = [1.0, t_1/t_2, t_1/t_4, t_1/t_8, t_1/t_12, t_1/t_16]
+    # Compute speedups
+    speedups = ones(5)
+    @. speedups[:] = t_ref[:] / t[:]
 
     # Hack to have uppercases on labels
     plot_label = @match name begin
-        "openblas" => "OpenBLAS"
-        "dft"      => "DataFlowTasks"
-        "dagger"   => "Dagger"
-        "forkjoin" => "Forkjoin"
+        "openblas"  => "OpenBLAS"
+        "dft"       => "DataFlowTasks"
+        "dagger"    => "Dagger"
+        "forkjoin"  => "Forkjoin"
+        "tiled_seq" => "Tiled Sequentiel"
     end
     
     plot!(
-        n_cores, speedups,
+        n, speedups,
         #yerrors = (flops./min, flops./max),
         m = :o, mc = :white, markerstrokewidth = 2, markersize = 5,
         lc = color, lw = 3,

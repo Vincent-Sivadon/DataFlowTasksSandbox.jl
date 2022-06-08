@@ -54,15 +54,15 @@ function plotting()
     # tilesizes = 2560, 1280, 640, 320, 160
     nb_blocks = [2^i for i ∈ 0:7]
     # (t_seq, t_dft, t_dagger) = benchmarking()
-    t_seq = [9.5642225e8,3.15818545e8, 1.23099317e8, 8.772415e7, 8.94001765e7]
-    t_dft = [9.49728196e8, 3.29465581e8, 1.263948185e8, 8.96896385e7, 9.67536765e7]
-    t_dagger = [9.77968933e8, 3.41965656e8, 1.35502504e8, 2.17676352e8, 2.210834433e9]
+    t_seq =  [9.606243185e8, 4.30590706e8, 3.17361436e8, 1.87195971e8, 1.231655175e8, 9.48970255e7, 8.2615358e7, 8.88310475e7]
+    t_dft =  [9.55663854e8, 4.30671664e8, 3.21020442e8, 1.914623475e8, 1.25252885e8, 9.6340669e7, 8.4530204e7, 9.3576361e7]
+    t_dagger = [1.005935355e9, 4.48136324e8, 3.41689981e8, 1.91398889e8, 1.31283478e8, 1.51273213e8, 1.96978325e8, 4.96712556e8]
 
     flops = @. 1/3*2560^3 + 1/2*2560^2
 
     plot(
         title = "Cholesky factorization for different tilesizes\n Matrix size : 2560, Nb of threads : 1",
-        legend=:inside,
+        legend=:topleft,
         size=(700,500),
         xlabel = "Number of blocks", ylabel = "GFlops",
     )
