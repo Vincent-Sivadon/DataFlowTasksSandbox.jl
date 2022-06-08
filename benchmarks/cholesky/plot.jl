@@ -1,6 +1,7 @@
 # Depends on the data files in the data folder !
 # Will plot the evolution of GFlops/s for different versions
-# of cholesky factorization
+# of cholesky factorization depending on matrix's sizes
+# for a given number of threads
 
 using DelimitedFiles
 using Plots

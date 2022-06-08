@@ -1,29 +1,25 @@
 using DelimitedFiles
 using Plots
 using Match
+using DataFlowTasksSandbox: ROOT_DIR
 
-const ROOT_DIR = pkgdir(DataFlowTasksSandbox)
+# Get reference data (tiled seq)
+# -----------------------------
+nn = [2^i for i ∈ 0:5]
+file_ref = joinpath("$ROOT_DIR/data/cholesky/tiled_seq/", "nc_1.dat")
+t_ref = readdlm(file_ref,  '\t', Float64, '\n')[end, 2]
 
 function plotting_scalability(name, color)
-    n = [2^i for i ∈ 0:4]
-
-    # Get reference data (tiled seq)
-    # -----------------------------
-    files_ref = [joinpath("$ROOT_DIR/data/cholesky/tiled_seq/", "nc_$i.dat")
-                    for i ∈ n ]
-    t_ref = [ readdlm(files_ref[i],  '\t', Float64, '\n')[end, 2]
-                for i ∈ 1:5 ]
-
     # Get current version of interest's data
     # --------------------------------------
     files = [ joinpath("$ROOT_DIR/data/cholesky/$name/", "nc_$i.dat")
-                for i ∈ n ]
+                for i ∈ nn ]
     t = [ readdlm(files[i],  '\t', Float64, '\n')[end, 2]
-            for i ∈ 1:5 ]
+            for i ∈ 1:length(nn) ]
     
     # Compute speedups
-    speedups = ones(5)
-    @. speedups[:] = t_ref[:] / t[:]
+    speedups = ones(length(nn))
+    speedups[:] = t_ref ./ t[:]
 
     # Hack to have uppercases on labels
     plot_label = @match name begin
@@ -31,11 +27,10 @@ function plotting_scalability(name, color)
         "dft"       => "DataFlowTasks"
         "dagger"    => "Dagger"
         "forkjoin"  => "Forkjoin"
-        "tiled_seq" => "Tiled Sequentiel"
     end
     
     plot!(
-        n, speedups,
+        nn, speedups,
         #yerrors = (flops./min, flops./max),
         m = :o, mc = :white, markerstrokewidth = 2, markersize = 5,
         lc = color, lw = 3,
@@ -43,13 +38,14 @@ function plotting_scalability(name, color)
     )
 end
 
+
 p = plot(
-    [1, 16], [1, 16],
+    [1:32], [1:32],
     legend = :topleft,
-    xticks = 1:1:16, yticks = 1:1:16,
-    label = "Linear scalability (ideal)",
+    xticks = 1:2:34,
+    label = "Tiled Sequentiel",
     xlabel = "Nb of cores", ylabel = "Speedups",
-    title = "Cholesky factorization scalability",
+    title = "Cholesky factorization scalability\n matrix size = 5000",
     lc = :green, lw = 3
 )
 plotting_scalability("openblas", :red)
