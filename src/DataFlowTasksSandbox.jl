@@ -13,6 +13,8 @@ using TriangularSolve
 using RecursiveFactorization
 using Octavian
 
+using BenchmarkTools
+
 # Pseudo Tiled Matrix structure
 include("pseudo_tiled_matrix.jl")
 
@@ -28,10 +30,16 @@ include("cholesky/forkjoin.jl")
 include("lu/dft.jl")
 include("lu/forkjoin.jl")
 
+# Benchmarks
+# ****************
+include("benchmarks.jl")
+include("graphs.jl")
+
 export
     PseudoTiledMatrix,
     _chol!, cholesky_tiled_seq!,
     cholesky_dft!, cholesky_dagger!, cholesky_forkjoin!,
-    ROOT_DIR
+    ROOT_DIR,
+    _bench, init_csv_files, plot_scalability, plot_sizes
 
 end # module
