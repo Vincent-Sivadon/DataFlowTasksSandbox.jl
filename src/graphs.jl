@@ -27,6 +27,8 @@ function plot_scalability(n_cores, names, machine, mat_size)
 
         plot!(
             x, y,
+            m = :o, mc = :white, markerstrokewidth = 2, markersize = 5,
+            lw = 3,
             label=name
         )
     end
@@ -66,6 +68,8 @@ function plot_sizes(sizes, names, machine, n_cores)
 
         plot!(
             x, y,
+            m = :o, mc = :white, markerstrokewidth = 2, markersize = 5,
+            lw = 3,
             label=name
         )
     end

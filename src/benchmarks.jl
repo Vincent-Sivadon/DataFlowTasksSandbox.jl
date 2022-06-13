@@ -5,7 +5,7 @@ using BenchmarkTools
 using DataFrames
 using CSV
 
-function _bench(name::String, size::Int)
+function _benchmark(name::String, size::Int)
     # Get function according to name
     func = @match name begin
         "openblas"  => cholesky!
@@ -25,11 +25,18 @@ function _bench(name::String, size::Int)
 
     # Benchmark
     b = @benchmark $func(B) setup=(B=copy($A)) evals=1
+    t = median(b).time
 
-    median(b).time
+    # Print
+    n_threads = Threads.nthreads()
+    @info "$name"
+    @info "size = $size"
+    @info "n_cores = $n_threads"
+
+    t
 end
 
-function bench(names::Vector{String}, sizes::Vector{Int})
+function benchmark(names::Vector{String}, sizes::Vector{Int})
     benchmarks = [ [_bench(name , size) for size ∈ sizes] for name ∈ names ]
 
     col_names = split(string(sizes), ",", keepempty=false)

@@ -20,7 +20,6 @@ function _cholesky_dagger!(A::PseudoTiledMatrix)
         # Diagonal block
         thunks[i, i] = Dagger.@spawn chol_task(thunks[i, i])      
         
-        
         L = adjoint(UpperTriangular(fetch(thunks[i, i])))
 
         # Forward substitutions

@@ -40,6 +40,6 @@ export
     _chol!, cholesky_tiled_seq!,
     cholesky_dft!, cholesky_dagger!, cholesky_forkjoin!,
     ROOT_DIR,
-    _bench, init_csv_files, plot_scalability, plot_sizes
+    bench, init_csv_files, plot_scalability, plot_sizes
 
 end # module
