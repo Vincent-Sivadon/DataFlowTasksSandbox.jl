@@ -7,19 +7,17 @@ cholesky_dft!(A::Matrix, s=TILESIZE[]) = _cholesky_dft!(PseudoTiledMatrix(A, s))
 
 # Implementation
 function _cholesky_dft!(A::PseudoTiledMatrix)
-    # Number of blocks
-    m,n = size(A)
-
+    m,n = size(A) # number of blocks
     for i in 1:m
+        # _chol!(A[i,i],UpperTriangular)
+        @dspawn _chol!(A[i,i]) (A[i,i],) (RW,)
         Aii = A[i,i]
-        # _chol!(Aii)
-        @dspawn _chol!(Aii) (Aii,) (RW,)
         U = UpperTriangular(Aii)
         L = adjoint(U)
         for j in i+1:n
             Aij = A[i,j]
-            # TriangularSolve.ldiv!(L,Aij)
-            @dspawn TriangularSolve.ldiv!(L,Aij) (Aii,Aij) (R,RW)
+            # TriangularSolve.ldiv!(L,Aij,tturbo)
+            @dspawn TriangularSolve.ldiv!(L,Aij, Val(false)) (Aii,Aij) (R,RW)
         end
         for j in i+1:m
             Aij = A[i,j]
@@ -29,8 +27,8 @@ function _cholesky_dft!(A::PseudoTiledMatrix)
                 Ajk = A[j,k]
                 Aji = adjoint(Aij)
                 Aik = A[i,k]
-                # schur_complement!(Ajk,Aji,Aik)
-                @dspawn Octavian.matmul_serial!(Ajk,Aji,Aik,-1,1) (Ajk,Aij,Aik) (RW,R,R)
+                # schur_complement!(Ajk,Aji,Aik,tturbo)
+                @dspawn Octavian.matmul_serial!(Ajk, Aji, Aik, -1, 1) (Ajk,Aij,Aik) (RW,R,R)
             end
         end
     end

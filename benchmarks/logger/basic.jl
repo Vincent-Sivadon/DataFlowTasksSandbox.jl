@@ -23,8 +23,8 @@ end
 
 # Context
 # -------
-const A = ones(2000,2000)
-const B = ones(2000,2000)
+A = ones(2000,2000)
+B = ones(2000,2000)
 
 # Logging
 # -------
