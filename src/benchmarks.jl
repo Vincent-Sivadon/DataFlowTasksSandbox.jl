@@ -5,7 +5,9 @@ using BenchmarkTools
 using DataFrames
 using CSV
 
-function _benchmark(name::String, size::Int)
+n_threads = Threads.nthreads()
+
+function _benchmark(name::String, size::Int, A)
     # Get function according to name
     func = @match name begin
         "openblas"  => cholesky!
@@ -17,35 +19,34 @@ function _benchmark(name::String, size::Int)
 
     BLAS.set_num_threads(Threads.nthreads())
 
-    # Create an SPD matrix
-    m = size
-    A = rand(m,m)
-    A = (A + adjoint(A))/2
-    A = A + m*I
-
     # Benchmark
     b = @benchmark $func(B) setup=(B=copy($A)) evals=1
     t = median(b).time
 
     # Print
-    n_threads = Threads.nthreads()
-    @info "$name"
+    @info "============= $name ============="
     @info "size = $size"
-    @info "n_cores = $n_threads"
-
+    @info "t    = $t"
+    
     t
 end
 
 function benchmark(names::Vector{String}, sizes::Vector{Int})
-    benchmarks = [ [_bench(name , size) for size ∈ sizes] for name ∈ names ]
+    machine_name = gethostname()
+    n_threads = Threads.nthreads()
+
+    @info "n_cores = $n_threads"
+    
+    benchmarks = [
+        [_benchmark(name , size, SPD!(rand(size,size)) ) for size ∈ sizes]
+        for name ∈ names
+    ]
 
     col_names = split(string(sizes), ",", keepempty=false)
     col_names = strip.(col_names, ['['])
     col_names = strip.(col_names, [']'])
     col_names = strip.(col_names, [' '])
 
-    machine_name = gethostname()
-    n_threads = Threads.nthreads()
 
     for i ∈ 1:length(benchmarks)
         # Open data file
@@ -85,4 +86,9 @@ function init_csv_files(machine::String)
         filepath = joinpath(ROOT_DIR, filepath)
         CSV.write(filepath, df)
     end
+end
+
+function SPD!(A)
+    A = (A + adjoint(A))/2
+    A = A + size(A)[1]*I
 end

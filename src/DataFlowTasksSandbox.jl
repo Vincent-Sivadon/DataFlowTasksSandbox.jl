@@ -34,12 +34,13 @@ include("lu/forkjoin.jl")
 # ****************
 include("benchmarks.jl")
 include("graphs.jl")
+include("logs.jl")
 
 export
     PseudoTiledMatrix,
     _chol!, cholesky_tiled_seq!,
     cholesky_dft!, cholesky_dagger!, cholesky_forkjoin!,
     ROOT_DIR,
-    bench, init_csv_files, plot_scalability, plot_sizes
-
+    benchmark, init_csv_files, plot_scalability, plot_sizes,
+    logging
 end # module
