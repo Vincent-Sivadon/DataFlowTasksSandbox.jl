@@ -7,7 +7,7 @@ step = 500
 nn = n_min:step:n_max |> collect
 
 # Names
-names = ["openblas", "dft", "dagger", "forkjoin"]
+names = ["forkjoin"]
 
 # Benchmarks
 benchmark(names, nn)

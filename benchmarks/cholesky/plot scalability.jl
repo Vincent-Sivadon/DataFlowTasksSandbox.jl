@@ -9,4 +9,4 @@ mat_size = 5000
 machine = "LEGION"
 
 plot_scalability(n_cores, names, machine, mat_size)
-# savefig("fig/cholesky/maury_scalability.png")
+# savefig("fig/cholesky/LEGION_scalability.png")

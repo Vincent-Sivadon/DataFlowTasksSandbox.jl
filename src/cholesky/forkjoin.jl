@@ -17,7 +17,7 @@ function _cholesky_forkjoin!(A::PseudoTiledMatrix)
         L = adjoint(U)
         Threads.@threads for j in i+1:n
             Aij = A[i,j]
-            TriangularSolve.ldiv!(L,Aij)
+            TriangularSolve.ldiv!(L,Aij, Val(false))
         end
         # spawn m*(m+1)/2 tasks and sync them at the end
         @sync for j in i+1:m
