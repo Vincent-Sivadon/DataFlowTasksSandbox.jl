@@ -2,6 +2,7 @@ using DataFlowTasks
 using DataFlowTasks: R, W, RW
 using DataFlowTasksSandbox
 using LinearAlgebra
+using GraphViz: Graph
 
 # Environnement
 # -------------
@@ -39,4 +40,4 @@ s = 0.1
 
 # Logging
 # -------
-logging(fork_join, TraceLog, m, s)
+logging(fork_join, Trace, m, s)

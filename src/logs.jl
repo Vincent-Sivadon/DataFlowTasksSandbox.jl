@@ -17,5 +17,5 @@ function logging(work, graphtype, context...)
 
     # Plot
     # ----
-    graphtype == TraceLog ? plot(graphtype) : plot_dag()
+    graphtype == Trace ? plot(graphtype) : Graph(getdag())
 end

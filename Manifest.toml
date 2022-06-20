@@ -177,10 +177,8 @@ uuid = "9a962f9c-6df0-11e9-0e5d-c546b8b5ee8a"
 version = "1.10.0"
 
 [[deps.DataFlowTasks]]
-deps = ["DataStructures", "GraphViz", "LinearAlgebra", "Logging", "LoopVectorization", "RecipesBase", "ThreadPools"]
-git-tree-sha1 = "58ebe4e31bd12b894d4a533eafa3956c610c7145"
-repo-rev = "stage"
-repo-url = "https://github.com/maltezfaria/DataFlowTasks.jl.git"
+deps = ["DataStructures", "LinearAlgebra", "Logging", "LoopVectorization", "RecipesBase", "ThreadPools"]
+path = "C:\\dev\\Julia\\StageTriscaleInnov\\DataFlowTasks.jl"
 uuid = "d1549cb6-e9f4-42f8-98cc-ffc8d067ff5b"
 version = "0.1.0"
 

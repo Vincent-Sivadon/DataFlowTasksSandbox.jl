@@ -13,6 +13,7 @@ using TriangularSolve
 using RecursiveFactorization
 using Octavian
 using Plots
+using GraphViz: Graph
 
 using BenchmarkTools
 
