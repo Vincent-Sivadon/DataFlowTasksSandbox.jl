@@ -34,3 +34,8 @@ B = ones(4000,4000)
 # -------
 set_tracelabels("A", "B")
 logging(work, Trace, A, B)
+
+# Decomment to save TRACE png file
+# ------------------------------
+# using Plots
+# savefig("./fig/logger/basic.png")

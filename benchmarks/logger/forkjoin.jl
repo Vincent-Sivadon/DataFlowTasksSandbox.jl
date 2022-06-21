@@ -40,4 +40,5 @@ s = 0.1
 
 # Logging
 # -------
+set_tracelabels() # in case we've already given values to tracelabels
 logging(fork_join, Trace, m, s)
