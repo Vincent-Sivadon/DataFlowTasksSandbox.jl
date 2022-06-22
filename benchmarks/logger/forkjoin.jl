@@ -6,7 +6,7 @@ using GraphViz: Graph
 
 # Environnement
 # -------------
-DataFlowTasks.should_log() = true
+DataFlowTasks.shouldlog() = true
 sch = DataFlowTasks.JuliaScheduler(500)
 DataFlowTasks.setscheduler!(sch)
 

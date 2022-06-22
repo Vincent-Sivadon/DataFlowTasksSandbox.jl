@@ -17,10 +17,9 @@ end
 
 
 # DataFlowTasks Environnement
-DataFlowTasks.should_log() = true
+DataFlowTasks.shouldlog() = true
 sch = DataFlowTasks.JuliaScheduler(500)
 DataFlowTasks.setscheduler!(sch)
-
 
 # Work to be traced
 # -----------------
@@ -30,9 +29,9 @@ work(A) = cholesky_dft!(A)
 # Context for the work
 # --------------------
 nthreads = Threads.nthreads()
-tilesizes = 256
+tilesizes = 1000
 DataFlowTasksSandbox.TILESIZE[] = tilesizes
-n = 5000
+n = 4000
 A = rand(n, n)
 A = (A + adjoint(A))/2
 A = A + n*I
@@ -49,9 +48,9 @@ g = logging(work, Dag, A)
 
 # Decomment to save DAG svg file
 # ------------------------------
-io = open("./fig/logger/dag__$(n)_$(tilesizes).svg", "w")
-GraphViz.render(io, g)
-close(io)
+# io = open("./fig/logger/dag__$(n)_$(tilesizes).svg", "w")
+# GraphViz.render(io, g)
+# close(io)
 
 # Decomment to save TRACE png file
 # ------------------------------

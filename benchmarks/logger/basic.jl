@@ -6,7 +6,7 @@ using GraphViz: Graph
 
 # Environnement
 # -------------
-DataFlowTasks.should_log() = true
+DataFlowTasks.shouldlog() = true
 
 
 # Work
