@@ -45,5 +45,5 @@ export
     cholesky_dft!, cholesky_dagger!, cholesky_forkjoin!,
     ROOT_DIR,
     benchmark, init_csv_files, plot_scalability, plot_sizes,
-    logging
+    logging, Dag
 end # module

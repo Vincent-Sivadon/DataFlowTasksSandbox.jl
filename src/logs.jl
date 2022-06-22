@@ -1,3 +1,6 @@
+""" Factice type to dispatch on logging method """
+struct Dag end
+
 "Will produce a grarphtype graph of the function work on context variables"
 function logging(work, graphtype, context...)
     # Make a copy of context and Precompile
@@ -8,7 +11,7 @@ function logging(work, graphtype, context...)
     
     # Clear logger
     # ------------
-    DataFlowTasks.clear_logger()
+    resetlogger()
     DataFlowTasks.TASKCOUNTER[] = 0
 
     # Real Work

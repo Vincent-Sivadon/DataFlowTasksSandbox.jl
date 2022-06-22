@@ -37,14 +37,9 @@ A = (A + adjoint(A))/2
 A = A + n*I
 
 
-# Set trace category labels
-# -------------------------
-set_tracelabels("chol", "ldiv", "schur")
-
-
 # LOGGING
 # -------
-g = logging(work, Dag, A)
+g = logging(work, Trace, A)
 
 # Decomment to save DAG svg file
 # ------------------------------
